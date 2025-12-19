@@ -1,9 +1,7 @@
 import json
 import pickle
 from typing import Dict, Optional
-import netmiko
 import logging
-import os
 from pathlib import Path
 import datetime
 from netmiko import ConnectHandler, NetmikoTimeoutException, NetmikoAuthenticationException
@@ -11,10 +9,36 @@ from netmiko import ConnectHandler, NetmikoTimeoutException, NetmikoAuthenticati
 
 class DeviceBackup:
     """
-    Backup network device configurations.
+    Network Device Configuration Backup Module
+
+    This module handles the backup of network device configurations using SSH connections.
+    It reads device inventory from a JSON file, connects to each device using credentials
+    retrieved from HashiCorp Vault, and saves the running configuration to local files.
+
+    The module supports:
+    - Multiple Cisco devices (IOS/IOS-XE)
+    - Parallel device connections (can be extended)
+    - Error handling for connection failures
+    - Configuration file management with timestamps
+
+    Device Inventory:
+        - Source: ../data/payload/device_inventory.json
+        - Required fields: hostname, ip_address, device_type, vendor
+
+    Output:
+        - Configuration files saved as: {hostname}_config_backup.txt
+        - Files contain complete running configuration from each device
+
+    Dependencies:
+        - netmiko library for SSH connections
+        - Vault credentials from step_01_vault_auth
+
+    Author: [João Paulo Coutinho Pinheiro]
+    Created: December 2025
+    Version: 1.0
     """
     date_str = datetime.datetime.now().strftime("%Y-%m-%d")
-    LOG_DIR = Path("/home/user/pystudies/myenv/pythonbasic/projects/backup_logs")  # Define your log directory here
+    LOG_DIR = Path("/home/user/pystudies/myenv/pythonbasic/projects/Vault_authentication/devices_config_backup")  # Define your log directory here
 
     def __init__(self):
         """
@@ -30,11 +54,11 @@ class DeviceBackup:
         with open('vault_token.pkl', 'rb') as f:
             self.vault_token = pickle.load(f)
 
-        with open('/home/user/pystudies/myenv/pythonbasic/projects/network-config-backup/data/payload/device_inventory.json', 'r') as file:
+        with open('/home/user/pystudies/myenv/pythonbasic/projects/Vault_authentication/data/payload/device_inventory.json', 'r') as file:
             self.devices_inventory = json.load(file)
         
 
-    def get_config(self):
+    def get_config(self) -> None:
         """
         Backup configuration for a single device.
         """
