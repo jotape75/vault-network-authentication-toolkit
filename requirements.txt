@@ -1,0 +1,8 @@
+# HashiCorp Vault API client
+hvac==2.1.0
+
+# Network device automation library
+netmiko==4.3.0
+
+# HTTP requests library (required by hvac)
+requests==2.31.0

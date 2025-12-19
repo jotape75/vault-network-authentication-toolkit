@@ -1,0 +1,18 @@
+{
+  "devices": [
+    {
+      "hostname": "ciscowansw01",
+      "ip_address": "192.168.0.238",
+      "device_type": "cisco_ios",
+      "type": "switch",
+      "vendor": "cisco"
+    },
+    {
+      "hostname": "ciscowansw02", 
+      "ip_address": "192.168.0.239",
+      "device_type": "cisco_ios",
+      "type": "switch",
+      "vendor": "cisco"
+    }
+  ]
+}
