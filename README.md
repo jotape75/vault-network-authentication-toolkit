@@ -194,13 +194,6 @@ configs/ciscowansw02_config_backup.txt
 | `get_config()` | SSH to devices and backup configs | Local config files |
 | `execute()` | Run complete backup process | Logged results |
 
-### Supported Devices
-
-| Vendor | Device Type | Netmiko Driver | Status |
-|--------|-------------|----------------|--------|
-| **Cisco** | IOS/IOS-XE Switches | `cisco_ios` | ✅ Tested |
-| **Cisco** | IOS/IOS-XE Routers | `cisco_ios` | ✅ Compatible |
-
 ## Logging and Monitoring
 
 ### Log Files
